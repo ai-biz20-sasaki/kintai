@@ -33,6 +33,48 @@ export default function Dashboard() {
     parseInt(selectedYearMonth.split('-')[1]) - 1
   );
 
+  const startTime01 = (dayOfWeek: string) => {
+    if (dayOfWeek === "土" || dayOfWeek === "日") {
+      return "";
+    } else {
+      return "9:30";
+    }
+  };
+
+  const endTime01 = (dayOfWeek: string) => {
+    if (dayOfWeek === "土" || dayOfWeek === "日") {
+      return "";
+    } else {
+      return "12:00";
+    }
+  };
+
+  const newline = (dayOfWeek: string) => {
+    if (dayOfWeek === "土" || dayOfWeek === "日") {
+      return "";
+    } else {
+      return <br />;
+    }
+  };
+
+  const startTime02 = (date: number, dayOfWeek: string) => {
+    if (dayOfWeek === "土" || dayOfWeek === "日") {
+      return "";
+    } else {
+      return `${date},${dayOfWeek},13:00`;
+    }
+  };
+
+  const endTime02 = (dayOfWeek: string) => {
+    if (dayOfWeek === "土" || dayOfWeek === "日") {
+      return "";
+    } else if(dayOfWeek === "月" || dayOfWeek === "水" || dayOfWeek === "金") {
+      return "16:00";
+    } else {
+      return "18:30";
+    }
+  };
+
   return (
     <div className="m-3">
       <div>Dashboard</div>
@@ -41,7 +83,14 @@ export default function Dashboard() {
       <div>
         {calendarDates.map((item) => (
           <div key={item.date}>
-            <span>{item.date}</span> <span>{item.dayOfWeek}</span>
+            {item.date},
+            {item.dayOfWeek},
+            {startTime01(item.dayOfWeek)},
+            {endTime01(item.dayOfWeek)},
+            {newline(item.dayOfWeek)}
+            {startTime02(item.date, item.dayOfWeek)},
+            {endTime02(item.dayOfWeek)},
+
           </div>
         ))}
       </div>
