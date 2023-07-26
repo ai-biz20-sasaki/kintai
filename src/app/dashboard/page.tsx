@@ -13,7 +13,7 @@ export default function Dashboard() {
   const [selectedYearMonth, setSelectedYearMonth] = useState(formattedNowMonth);
 
   // カレンダーの日付と曜日を計算するヘルパー関数
-  const getCalendarDates = (year, month) => {
+  const getCalendarDates = (year: number, month: number) => {
     const firstDayOfMonth = new Date(year, month, 1);
     const lastDayOfMonth = new Date(year, month + 1, 0);
     const dates = [];
