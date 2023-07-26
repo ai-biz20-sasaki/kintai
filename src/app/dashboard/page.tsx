@@ -5,9 +5,28 @@ export default function Dashboard() {
   const now = new Date()
   const nowYear = now.getFullYear()
   const nowMonth = now.getMonth()
-  //const nowDate = now.getDate()
+  const nowDate = now.getDate()
   const formattedNowMonth = `${nowYear}-${(nowMonth + 1).toString().padStart(2, '0')}`;
   //const formattedNowDate = `${nowYear}-${(nowMonth + 1).toString().padStart(2, '0')}-${nowDate.toString().padStart(2, '0')}`;
+
+  //開始時間、終了時間、休憩開始時間、休憩終了時間を定義
+  const startTime = new Date(nowYear, nowMonth, nowDate, 9, 30, 0)  //9:30
+  const endTime =  new Date(nowYear, nowMonth, nowDate, 18, 30, 0)  //18:30
+  const leaveEarlyTime =  new Date(nowYear, nowMonth, nowDate, 16, 0, 0)  //16:00
+  const breakStartTime = new Date(nowYear, nowMonth, nowDate, 12, 0, 0) //12:00
+  const breakEndTime = new Date(nowYear, nowMonth, nowDate, 13, 0, 0) //13:00
+
+  // ミリ秒をhh:mm形式に変換するヘルパー関数
+  const convertMsToHHMM = (ms: number) => {
+    const totalSeconds = Math.floor(ms / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+
+    const formattedHours = hours.toString().padStart(2, '0');
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+
+    return `${formattedHours}:${formattedMinutes}`;
+  };
 
   // ステートとして選択した年と月を管理
   const [selectedYearMonth, setSelectedYearMonth] = useState(formattedNowMonth);
@@ -49,6 +68,14 @@ export default function Dashboard() {
     }
   };
 
+  const getTotalTime01 = (dayOfWeek: string) => {
+    if (dayOfWeek === "土" || dayOfWeek === "日") {
+      return "";
+    } else {
+      return convertMsToHHMM(breakStartTime.getTime() - startTime.getTime());
+    }
+  };
+
   const newline = (dayOfWeek: string) => {
     if (dayOfWeek === "土" || dayOfWeek === "日") {
       return "";
@@ -75,6 +102,16 @@ export default function Dashboard() {
     }
   };
 
+  const getTotalTime02 = (dayOfWeek: string) => {
+    if (dayOfWeek === "土" || dayOfWeek === "日") {
+      return "0:00";
+    } else if(dayOfWeek === "月" || dayOfWeek === "水" || dayOfWeek === "金") {
+      return convertMsToHHMM(leaveEarlyTime.getTime() - breakEndTime.getTime());
+    } else {
+      return convertMsToHHMM(endTime.getTime() - breakEndTime.getTime());
+    }
+  };
+
   return (
     <div className="m-3">
       <div>Dashboard</div>
@@ -87,9 +124,11 @@ export default function Dashboard() {
             {item.dayOfWeek},
             {getStartTime01(item.dayOfWeek)},
             {getEndTime01(item.dayOfWeek)},
+            {getTotalTime01(item.dayOfWeek)},
             {newline(item.dayOfWeek)}
             {getStartTime02(item.date, item.dayOfWeek)},
             {getEndTime02(item.dayOfWeek)},
+            {getTotalTime02(item.dayOfWeek)},
           </div>
         ))}
       </div>
