@@ -33,7 +33,7 @@ export default function Dashboard() {
     parseInt(selectedYearMonth.split('-')[1]) - 1
   );
 
-  const startTime01 = (dayOfWeek: string) => {
+  const getStartTime01 = (dayOfWeek: string) => {
     if (dayOfWeek === "土" || dayOfWeek === "日") {
       return "";
     } else {
@@ -41,7 +41,7 @@ export default function Dashboard() {
     }
   };
 
-  const endTime01 = (dayOfWeek: string) => {
+  const getEndTime01 = (dayOfWeek: string) => {
     if (dayOfWeek === "土" || dayOfWeek === "日") {
       return "";
     } else {
@@ -57,7 +57,7 @@ export default function Dashboard() {
     }
   };
 
-  const startTime02 = (date: number, dayOfWeek: string) => {
+  const getStartTime02 = (date: number, dayOfWeek: string) => {
     if (dayOfWeek === "土" || dayOfWeek === "日") {
       return "";
     } else {
@@ -65,7 +65,7 @@ export default function Dashboard() {
     }
   };
 
-  const endTime02 = (dayOfWeek: string) => {
+  const getEndTime02 = (dayOfWeek: string) => {
     if (dayOfWeek === "土" || dayOfWeek === "日") {
       return "";
     } else if(dayOfWeek === "月" || dayOfWeek === "水" || dayOfWeek === "金") {
@@ -85,12 +85,11 @@ export default function Dashboard() {
           <div key={item.date}>
             {item.date},
             {item.dayOfWeek},
-            {startTime01(item.dayOfWeek)},
-            {endTime01(item.dayOfWeek)},
+            {getStartTime01(item.dayOfWeek)},
+            {getEndTime01(item.dayOfWeek)},
             {newline(item.dayOfWeek)}
-            {startTime02(item.date, item.dayOfWeek)},
-            {endTime02(item.dayOfWeek)},
-
+            {getStartTime02(item.date, item.dayOfWeek)},
+            {getEndTime02(item.dayOfWeek)},
           </div>
         ))}
       </div>
