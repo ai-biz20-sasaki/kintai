@@ -34,10 +34,10 @@ export default function Dashboard() {
   );
 
   return (
-    <>
+    <div className="m-3">
       <div>Dashboard</div>
       <input type="month" value={selectedYearMonth} onChange={(e) => setSelectedYearMonth(e.target.value)} />
-      <hr />
+      <hr className="my-2" />
       <div>
         {calendarDates.map((item) => (
           <div key={item.date}>
@@ -45,6 +45,6 @@ export default function Dashboard() {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 }
