@@ -28,6 +28,13 @@ export default function Dashboard() {
     return `${formattedHours}:${formattedMinutes}`;
   };
 
+// 時（hh）と分（mm）を取得し、文字列として整形するヘルパー関数
+const formatHHMM = (date: Date) => {
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  return `${hours}:${minutes}`;
+};
+
   // ステートとして選択した年と月を管理
   const [selectedYearMonth, setSelectedYearMonth] = useState(formattedNowMonth);
 
@@ -54,23 +61,23 @@ export default function Dashboard() {
 
   const getStartTime01 = (dayOfWeek: string) => {
     if (dayOfWeek === "土" || dayOfWeek === "日") {
-      return "";
+      return ",";
     } else {
-      return "9:30";
+      return formatHHMM(startTime) + ",";
     }
   };
 
   const getEndTime01 = (dayOfWeek: string) => {
     if (dayOfWeek === "土" || dayOfWeek === "日") {
-      return "";
+      return ",";
     } else {
-      return "12:00";
+      return formatHHMM(breakStartTime) + ",";
     }
   };
 
   const getTotalTime01 = (dayOfWeek: string) => {
     if (dayOfWeek === "土" || dayOfWeek === "日") {
-      return "";
+      return "0:00";
     } else {
       return convertMsToHHMM(breakStartTime.getTime() - startTime.getTime());
     }
@@ -88,7 +95,7 @@ export default function Dashboard() {
     if (dayOfWeek === "土" || dayOfWeek === "日") {
       return "";
     } else {
-      return `${date},${dayOfWeek},13:00`;
+      return `${date},${dayOfWeek},${formatHHMM(breakEndTime)},`;
     }
   };
 
@@ -96,15 +103,15 @@ export default function Dashboard() {
     if (dayOfWeek === "土" || dayOfWeek === "日") {
       return "";
     } else if(dayOfWeek === "月" || dayOfWeek === "水" || dayOfWeek === "金") {
-      return "16:00";
+      return formatHHMM(leaveEarlyTime) + ",";
     } else {
-      return "18:30";
+      return formatHHMM(endTime) + ",";
     }
   };
 
   const getTotalTime02 = (dayOfWeek: string) => {
     if (dayOfWeek === "土" || dayOfWeek === "日") {
-      return "0:00";
+      return "";
     } else if(dayOfWeek === "月" || dayOfWeek === "水" || dayOfWeek === "金") {
       return convertMsToHHMM(leaveEarlyTime.getTime() - breakEndTime.getTime());
     } else {
@@ -122,13 +129,13 @@ export default function Dashboard() {
           <div key={item.date}>
             {item.date},
             {item.dayOfWeek},
-            {getStartTime01(item.dayOfWeek)},
-            {getEndTime01(item.dayOfWeek)},
-            {getTotalTime01(item.dayOfWeek)},
+            {getStartTime01(item.dayOfWeek)}
+            {getEndTime01(item.dayOfWeek)}
+            {getTotalTime01(item.dayOfWeek)}
             {newline(item.dayOfWeek)}
-            {getStartTime02(item.date, item.dayOfWeek)},
-            {getEndTime02(item.dayOfWeek)},
-            {getTotalTime02(item.dayOfWeek)},
+            {getStartTime02(item.date, item.dayOfWeek)}
+            {getEndTime02(item.dayOfWeek)}
+            {getTotalTime02(item.dayOfWeek)}
           </div>
         ))}
       </div>
