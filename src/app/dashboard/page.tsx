@@ -69,12 +69,13 @@ const formatHHMM = (date: Date) => {
 
   const getEndTime01 = (dayOfWeek: string) => {
     if (dayOfWeek === "土" || dayOfWeek === "日") {
-      return ",";
+      return "";
     } else {
-      return formatHHMM(breakStartTime) + ",";
+      return formatHHMM(breakStartTime);
     }
   };
 
+  //この関数は未使用
   const getTotalTime01 = (dayOfWeek: string) => {
     if (dayOfWeek === "土" || dayOfWeek === "日") {
       return "0:00";
@@ -103,12 +104,13 @@ const formatHHMM = (date: Date) => {
     if (dayOfWeek === "土" || dayOfWeek === "日") {
       return "";
     } else if(dayOfWeek === "月" || dayOfWeek === "水" || dayOfWeek === "金") {
-      return formatHHMM(leaveEarlyTime) + ",";
+      return formatHHMM(leaveEarlyTime);
     } else {
-      return formatHHMM(endTime) + ",";
+      return formatHHMM(endTime);
     }
   };
 
+  //この関数は未使用
   const getTotalTime02 = (dayOfWeek: string) => {
     if (dayOfWeek === "土" || dayOfWeek === "日") {
       return "";
@@ -131,11 +133,9 @@ const formatHHMM = (date: Date) => {
             {item.dayOfWeek},
             {getStartTime01(item.dayOfWeek)}
             {getEndTime01(item.dayOfWeek)}
-            {getTotalTime01(item.dayOfWeek)}
             {newline(item.dayOfWeek)}
             {getStartTime02(item.date, item.dayOfWeek)}
             {getEndTime02(item.dayOfWeek)}
-            {getTotalTime02(item.dayOfWeek)}
           </div>
         ))}
       </div>
