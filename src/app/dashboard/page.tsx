@@ -137,6 +137,8 @@ export default function Dashboard() {
       {/* 対象年月を選択 */}
       <input type="month" value={selectedYearMonth} onChange={(e) => setSelectedYearMonth(e.target.value)} />
 
+      <hr className="my-2" />
+
       <div>
         {/* 開始時間を入力 */}
         <label htmlFor="startTime">開始時間：</label>
@@ -163,6 +165,7 @@ export default function Dashboard() {
       </div>
       
       <hr className="my-2" />
+      
       <div>
         {calendarDates.map((item) => (
           <div key={item.date}>
